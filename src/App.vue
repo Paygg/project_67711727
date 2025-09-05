@@ -13,6 +13,9 @@
         <li class="nav-item">
           <a class="nav-link" href="/showproduct">Show Product</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/customer">Customer</a>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             login
