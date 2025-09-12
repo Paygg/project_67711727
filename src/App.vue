@@ -24,7 +24,7 @@
             <li><a class="dropdown-item" href="#">Login</a></li>
             <li><a class="dropdown-item" href="#">Logout</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Register</a></li>
+            <li><a class="dropdown-item" href="/add_customer">Register</a></li>
           </ul>
         </li>
         <li class="nav-item">
