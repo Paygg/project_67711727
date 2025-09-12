@@ -1,43 +1,36 @@
 <?php
 
-  // เชื่อมต่อฐานข้อมูล
 include 'condb.php';
 
 try {
- //ตรวจสอบคำขอที่ได้รับจาก Client  ตามประเภทของคำ ว่าเป็น GET หรือ POST
     $method = $_SERVER['REQUEST_METHOD'];
 
-    
-        //เพิ่มข้อมูล
-        if ($method === "POST") {
-        $firstName = $_POST["firstName"];
-        $lastName  = $_POST["lastName"];
-        $username  = $_POST["username"];
-        $password  = $_POST["password"];
+    if ($method == 'POST') {
+        $data = json_decode(file_get_contents("php://input"), true);
 
-
-        $stmt = $conn->prepare("INSERT INTO customers (firstName, lastName, phone, username, password) VALUES (?,?,?,?,?)");
-
-        //----------------แปลง password---------------
-        $password = password_hash($data['password'], PASSWORD_BCRYPT);
-
-        $stmt->execute([$firstName, $lastName, $phone, $username, $password]);
-
+        if (isset($data['firstName'], $data['lastName'], $data['phone'], $data['username'], $data['password'])) {
+            $stmt = $conn->prepare("INSERT INTO customers (firstName, lastName, phone, username, password) VALUES (:firstName, :lastName, :phone, :username, :password)");
+            $stmt->bindParam(':firstName', $data['firstName']);
+            $stmt->bindParam(':lastName', $data['lastName']);
+            $stmt->bindParam(':phone', $data['phone']);
+            $stmt->bindParam(':username', $data['username']);
+            $hashedPassword = password_hash($data['password'], PASSWORD_BCRYPT);
+            $stmt->bindParam(':password', $hashedPassword);
 
             if ($stmt->execute()) {
-                echo json_encode(["success" => true, "message" => "Customer added successfully"]);
+                echo json_encode(["success" => true, "message" => "ลงทะเบียนสำเร็จ"]);
             } else {
-                echo json_encode(["success" => false, "message" => "Error adding customer"]);
+                echo json_encode(["success" => false, "message" => "เกิดข้อผิดพลาดในการบันทึก"]);
             }
         } else {
-            echo json_encode(["success" => false, "message" => "Missing required fields"]);
+            echo json_encode(["success" => false, "message" => "กรุณากรอกข้อมูลให้ครบถ้วน"]);
         }
-    
-
-
-
+    } else {
+        echo json_encode(["success" => false, "message" => "Method not allowed"]);
+    }
 } catch (PDOException $e) {
     echo json_encode(["success" => false, "message" => "Database error: " . $e->getMessage()]);
+} catch (Exception $e) {
+    echo json_encode(["success" => false, "message" => "Error: " . $e->getMessage()]);
 }
-
 ?>
