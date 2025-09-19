@@ -14,6 +14,9 @@
           <a class="nav-link" href="/showproduct">Show Product</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="/product">Product</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="/customer">Customer</a>
         </li>
         <li class="nav-item dropdown">
@@ -22,7 +25,6 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Login</a></li>
-            <li><a class="dropdown-item" href="#">Logout</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="/add_customer">Register</a></li>
           </ul>
