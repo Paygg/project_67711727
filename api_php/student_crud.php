@@ -22,7 +22,7 @@ try {
 
         $password_01  = password_hash($data["password"], PASSWORD_BCRYPT);
 
-        $stmt = $conn->prepare("INSERT INTO customers (first_name, last_name, email, phone,) 
+        $stmt = $conn->prepare("INSERT INTO students (first_name, last_name, email, phone,) 
                                 VALUES (:first_name, :last_name, :email, :phone,)");
 
         $stmt->bindParam(":first_name", $data["first_name"]);
@@ -101,7 +101,7 @@ elseif ($method === "PUT") {
 
         $student_id = intval($data["student_id"]);
 
-        $stmt = $conn->prepare("DELETE FROM customers WHERE student_id = :id");
+        $stmt = $conn->prepare("DELETE FROM studebts WHERE student_id = :id");
         $stmt->bindParam(":id", $student_id, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
