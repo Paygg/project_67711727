@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 26, 2025 at 06:43 AM
+-- Generation Time: Oct 03, 2025 at 06:40 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -44,7 +44,7 @@ INSERT INTO `customers` (`customer_id`, `firstName`, `lastName`, `phone`, `usern
 (1, 'Somchai', 'Wongdee', '0812345678', 'somchaiw', 'password123'),
 (2, 'Anong', 'Srisuk', '0898765432', 'anongs', 'securepass456'),
 (3, 'Panthakran', 'Pengpinij', '0979691519', 'Pay', '12345678'),
-(4, 'eqwe', 'qweqweqw', '1213123', 'waw', '9999999999');
+(4, 'wasd', 'dsaw', '1212312121', 'www', '9999999999');
 
 -- --------------------------------------------------------
 
@@ -137,7 +137,8 @@ CREATE TABLE `students` (
 INSERT INTO `students` (`student_id`, `first_name`, `last_name`, `email`, `phone`, `created_at`) VALUES
 (1, 'Somchai', 'Sukjai', 'somchai@example.com', '0811111111', '2025-09-26 03:18:23'),
 (2, 'Suda', 'Jaidee', 'suda@example.com', '0822222222', '2025-09-26 03:18:23'),
-(3, 'Anan', 'Thongdee', 'anan@example.com', '0833333333', '2025-09-26 03:18:23');
+(3, 'Anan', 'Thongdee', 'anan@example.com', '0833333333', '2025-09-26 03:18:23'),
+(7, 'Panthakran', 'Pengpinij', 'p................@gmail.com', '0979691519', '2025-10-03 03:53:24');
 
 --
 -- Indexes for dumped tables
@@ -217,7 +218,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
