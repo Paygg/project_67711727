@@ -16,6 +16,7 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/product">Product</a></li>
+            <li><a class="dropdown-item" href="/showproduct">ShowProduct</a></li>
             <li><a class="dropdown-item" href="/product_edit">Product Edit</a></li>
           </ul>
         </li>
@@ -27,6 +28,9 @@
             <li><a class="dropdown-item" href="/customer">Customer</a></li>
             <li><a class="dropdown-item" href="/customer_edit">Customer Edit</a></li>
           </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/employee">Eployee</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/student">Student</a>

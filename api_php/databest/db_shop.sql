@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2025 at 06:40 AM
+-- Generation Time: Oct 17, 2025 at 06:41 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -44,7 +44,35 @@ INSERT INTO `customers` (`customer_id`, `firstName`, `lastName`, `phone`, `usern
 (1, 'Somchai', 'Wongdee', '0812345678', 'somchaiw', 'password123'),
 (2, 'Anong', 'Srisuk', '0898765432', 'anongs', 'securepass456'),
 (3, 'Panthakran', 'Pengpinij', '0979691519', 'Pay', '12345678'),
-(4, 'wasd', 'dsaw', '1212312121', 'www', '9999999999');
+(4, 'wasd', 'dsaw', '1212312121', 'www', '9999999999'),
+(7, 'wada', 'dawdwa', 'dawdawda', 'dawdawd', '$2y$10$X8GZh/hBgY07NXI9YhLSTOwiGKSEiXCG2mlNzWvgNLamOQOy0HF.y'),
+(8, 'wad', 'ada', 'dadaw', 'dawd', '$2y$10$33JNUU1atQD91amM/wBvdex.5B5sEGf3QKgriKuSdex.MRAinEYHC');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee`
+--
+
+CREATE TABLE `employee` (
+  `employee_id` int(11) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `image` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`employee_id`, `firstname`, `lastname`, `username`, `password`, `image`) VALUES
+(1, 'สมชาย', 'พานิช', 'somchai123', 'password123', '1760675975_tset.jfif'),
+(2, 'สมศักดิ์', 'ศิริวัฒน์', 'somsak456', 'password456', '1760675988_1.png'),
+(3, 'สุรีย์', 'นิลธัญญา', 'suriya789', 'password789', '1760675996_2.jfif'),
+(4, 'ศิริพร', 'บุญลาภ', 'siriporn101', 'password101', '1760676004_3.jfif'),
+(6, 'dwada', 'dawa', 'wdawdawda', '', '1760676027_4.jfif');
 
 -- --------------------------------------------------------
 
@@ -151,6 +179,13 @@ ALTER TABLE `customers`
   ADD PRIMARY KEY (`customer_id`);
 
 --
+-- Indexes for table `employee`
+--
+ALTER TABLE `employee`
+  ADD PRIMARY KEY (`employee_id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
 -- Indexes for table `orderdetails`
 --
 ALTER TABLE `orderdetails`
@@ -188,7 +223,13 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `employee`
+--
+ALTER TABLE `employee`
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `orderdetails`

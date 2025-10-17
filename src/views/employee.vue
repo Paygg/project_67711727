@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-4">
-    <h2 class="mb-3">รายการสินค้า</h2>
+    <h2 class="mb-3">รายชื่อพนักงาน</h2>
 
     <div class="mb-3">
       <button class="btn btn-primary" @click="openAddModal">Add+</button>
@@ -10,33 +10,31 @@
       <thead class="table-primary">
         <tr>
           <th>ID</th>
-          <th>ชื่อสินค้า</th>
-          <th>รายละเอียด</th>
-          <th>ราคา</th>
-          <th>จำนวน</th>
+          <th>ชื่อ</th>
+          <th>นามสกุล</th>
+          <th>ชื่อผู้ใช้</th>
           <th>รูปภาพ</th>
-          <th>การจัดการ</th>
+          <th>การแก้ไข</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="product in products" :key="product.product_id">
-          <td>{{ product.product_id }}</td>
-          <td>{{ product.product_name }}</td>
-          <td>{{ product.description }}</td>
-          <td>{{ product.price }}</td>
-          <td>{{ product.stock }}</td>
+        <tr v-for="employee in employee" :key="employee.employee_id">
+          <td>{{ employee.employee_id }}</td>
+          <td>{{ employee.firstname }}</td>
+          <td>{{ employee.lastname }}</td>
+          <td>{{ employee.username }}</td>
           <td>
             <img
-              v-if="product.image"
-              :src="'http://localhost/project_67711727/api_php/uploads/' + product.image"
+              v-if="employee.image"
+              :src="'http://localhost/project_67711727/api_php/uploads/' + employee.image"
               width="100"
             />
           </td>
           <td>
-            <button class="btn btn-warning btn-sm me-2" @click="openEditModal(product)">
+            <button class="btn btn-warning btn-sm me-2" @click="openEditModal(employee)">
               แก้ไข
             </button>
-            <button class="btn btn-danger btn-sm" @click="deleteProduct(product.product_id)">
+            <button class="btn btn-danger btn-sm" @click="deleteEmployee(employee.employee_id)">
               ลบ
             </button>
           </td>
@@ -52,29 +50,25 @@
       <div class="modal-dialog modal-md">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">{{ isEditMode ? "แก้ไขสินค้า" : "เพิ่มสินค้าใหม่" }}</h5>
+            <h5 class="modal-title">{{ isEditMode ? "แก้ไขข้อมูล" : "เพิ่มพนักงานใหม่" }}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="saveProduct">
+            <form @submit.prevent="saveEmployee">
               <div class="mb-3">
-                <label class="form-label">ชื่อสินค้า</label>
-                <input v-model="editForm.product_name" type="text" class="form-control" required />
+                <label class="form-label">ชื่อ</label>
+                <input v-model="editForm.firstname" type="text" class="form-control" required />
               </div>
               <div class="mb-3">
-                <label class="form-label">รายละเอียด</label>
-                <textarea v-model="editForm.description" class="form-control"></textarea>
+                <label class="form-label">นามสกุล</label>
+                <input v-model="editForm.lastname" type="text" class="form-control" required />
               </div>
               <div class="mb-3">
-                <label class="form-label">ราคา</label>
-                <input v-model="editForm.price" type="number" step="0.01" class="form-control" required />
+                <label class="form-label">ชื่อผู้ใช้</label>
+                <input v-model="editForm.username" type="text" class="form-control" required />
               </div>
               <div class="mb-3">
-                <label class="form-label">จำนวน</label>
-                <input v-model="editForm.stock" type="number" class="form-control" required />
-              </div>
-              <div class="mb-3">
-  <label class="form-label">รูปภาพ</label>
+  <label class="form-label">รูปภาพ</label>   
   <!-- ✅ required เฉพาะตอนเพิ่มสินค้า -->
   <input
     type="file"
@@ -97,7 +91,7 @@
 
 
               <button type="submit" class="btn btn-success">
-                {{ isEditMode ? "บันทึกการแก้ไข" : "บันทึกสินค้าใหม่" }}
+                {{ isEditMode ? "บันทึกสำเร็จ" : "บันทึกพนักงานใหม่" }}
               </button>
             </form>
           </div>
@@ -111,29 +105,28 @@
 import { ref, onMounted } from "vue";
 
 export default {
-  name: "ProductList",
+  name: "EmployeeList",
   setup() {
-    const products = ref([]);
+    const employee = ref([]);
     const loading = ref(true);
     const error = ref(null);
     const isEditMode = ref(false); // ✅ เช็คโหมด
     const editForm = ref({
-      product_id: null,
-      product_name: "",
-      description: "",
-      price: "",
-      stock: "",
+      employee_id: null,
+      firstname: "",
+      lastname: "",
+      username: "",
       image: ""
     });
     const newImageFile = ref(null);
     let modalInstance = null;
 
     // โหลดข้อมูลสินค้า
-    const fetchProducts = async () => {
+    const fetchEmployee = async () => {
       try {
-        const res = await fetch("http://localhost/project_67711727/api_php/api_product.php");
+        const res = await fetch("http://localhost/project_67711727/api_php/api_employee.php");
         const data = await res.json();
-        products.value = data.success ? data.data : [];
+        employee.value = data.success ? data.data : [];
       } catch (err) {
         error.value = err.message;
       } finally {
@@ -145,11 +138,10 @@ export default {
 const openAddModal = () => {
   isEditMode.value = false;
   editForm.value = {
-    product_id: null,
-    product_name: "",
-    description: "",
-    price: "",
-    stock: "",
+    employee_id: null,
+    firstname: "",
+    lastname: "",
+    username: "",
     image: ""
   };
   newImageFile.value = null;
@@ -164,9 +156,9 @@ const openAddModal = () => {
  };
 
 // เปิด Modal สำหรับแก้ไขสินค้า
-    const openEditModal = (product) => {
+    const openEditModal = (employee) => {
       isEditMode.value = true;
-      editForm.value = { ...product };
+      editForm.value = { ...employee };
       newImageFile.value = null;
       const modalEl = document.getElementById("editModal");
       modalInstance = new window.bootstrap.Modal(modalEl);
@@ -178,25 +170,24 @@ const openAddModal = () => {
     };
 
 // ✅ ใช้ฟังก์ชันเดียวในการเพิ่ม / แก้ไข
-    const saveProduct = async () => {
+    const saveEmployee = async () => {
       const formData = new FormData();
       formData.append("action", isEditMode.value ? "update" : "add");
-      if (isEditMode.value) formData.append("product_id", editForm.value.product_id);
-      formData.append("product_name", editForm.value.product_name);
-      formData.append("description", editForm.value.description);
-      formData.append("price", editForm.value.price);
-      formData.append("stock", editForm.value.stock);
+      if (isEditMode.value) formData.append("employee_id", editForm.value.employee_id);
+      formData.append("firstname", editForm.value.firstname);
+      formData.append("lastname", editForm.value.lastname);
+      formData.append("username", editForm.value.username);
       if (newImageFile.value) formData.append("image", newImageFile.value);
 
       try {
-        const res = await fetch("http://localhost/project_67711727/api_php/api_product.php", {
+        const res = await fetch("http://localhost/project_67711727/api_php/api_employee.php", {
           method: "POST",
           body: formData
         });
         const result = await res.json();
         if (result.message) {
           alert(result.message);
-          fetchProducts();
+          fetchEmployee();
           modalInstance.hide();
         } else if (result.error) {
           alert(result.error);
@@ -207,22 +198,22 @@ const openAddModal = () => {
     };
 
     // ลบสินค้า
-    const deleteProduct = async (id) => {
+    const deleteEmployee = async (id) => {
       if (!confirm("คุณแน่ใจหรือไม่ที่จะลบสินค้านี้?")) return;
 
       const formData = new FormData();
       formData.append("action", "delete");
-      formData.append("product_id", id);
+      formData.append("employee_id", id);
 
       try {
-        const res = await fetch("http://localhost/project_67711727/api_php/api_product.php", {
+        const res = await fetch("http://localhost/project_67711727/api_php/api_employee.php", {
           method: "POST",
           body: formData
         });
         const result = await res.json();
         if (result.message) {
           alert(result.message);
-          products.value = products.value.filter((p) => p.product_id !== id);
+          employee.value = employee.value.filter((p) => p.employee_id !== id);
         } else if (result.error) {
           alert(result.error);
         }
@@ -231,10 +222,10 @@ const openAddModal = () => {
       }
     };
 
-    onMounted(fetchProducts);
+    onMounted(fetchEmployee);
 
     return {
-      products,
+      employee,
       loading,
       error,
       editForm,
@@ -242,8 +233,8 @@ const openAddModal = () => {
       openAddModal,
       openEditModal,
       handleFileUpload,
-      saveProduct,
-      deleteProduct
+      saveEmployee,
+      deleteEmployee
     };
   }
 };
