@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 17, 2025 at 06:41 AM
+-- Generation Time: Oct 31, 2025 at 07:51 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -43,10 +43,9 @@ CREATE TABLE `customers` (
 INSERT INTO `customers` (`customer_id`, `firstName`, `lastName`, `phone`, `username`, `password`) VALUES
 (1, 'Somchai', 'Wongdee', '0812345678', 'somchaiw', 'password123'),
 (2, 'Anong', 'Srisuk', '0898765432', 'anongs', 'securepass456'),
-(3, 'Panthakran', 'Pengpinij', '0979691519', 'Pay', '12345678'),
-(4, 'wasd', 'dsaw', '1212312121', 'www', '9999999999'),
-(7, 'wada', 'dawdwa', 'dawdawda', 'dawdawd', '$2y$10$X8GZh/hBgY07NXI9YhLSTOwiGKSEiXCG2mlNzWvgNLamOQOy0HF.y'),
-(8, 'wad', 'ada', 'dadaw', 'dawd', '$2y$10$33JNUU1atQD91amM/wBvdex.5B5sEGf3QKgriKuSdex.MRAinEYHC');
+(3, 'Panthakran', 'Pengpinij', '0979691519', 'Pay', '$2y$10$N7zH4l/u5ndO3G/Sl2oqr.Woio3MrCTpY84fjj9ndP5fxB4CpSpfy'),
+(4, 'wasd', 'dsaw', '1212312121', 'www', '$2y$10$IGgashdCA5tXk/9AY8FBTOTlDO..hNeX7wBg6osSMOpYeO5wfqbdK'),
+(7, 'aaa', 'aaa', 'aaa', 'aaa', '$2y$10$1GXNIo30vrsG.4HAHvxkFuvOqt8yOCIp3BOpz5EaYV0MJsEo3D4hK');
 
 -- --------------------------------------------------------
 
@@ -72,7 +71,7 @@ INSERT INTO `employee` (`employee_id`, `firstname`, `lastname`, `username`, `pas
 (2, 'สมศักดิ์', 'ศิริวัฒน์', 'somsak456', 'password456', '1760675988_1.png'),
 (3, 'สุรีย์', 'นิลธัญญา', 'suriya789', 'password789', '1760675996_2.jfif'),
 (4, 'ศิริพร', 'บุญลาภ', 'siriporn101', 'password101', '1760676004_3.jfif'),
-(6, 'dwada', 'dawa', 'wdawdawda', '', '1760676027_4.jfif');
+(6, 'dwada', 'dawa', 'wdawdawda', '123', '1760676027_4.jfif');
 
 -- --------------------------------------------------------
 
@@ -223,13 +222,13 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `orderdetails`
