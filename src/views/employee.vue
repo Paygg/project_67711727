@@ -68,27 +68,26 @@
                 <input v-model="editForm.username" type="text" class="form-control" required />
               </div>
               <div class="mb-3">
-  <label class="form-label">รูปภาพ</label>   
-  <!-- ✅ required เฉพาะตอนเพิ่มสินค้า -->
-  <input
-    type="file"
-    @change="handleFileUpload"
-    class="form-control"
-    :required="!isEditMode"
-  />
+                <label class="form-label">รหัสผ่าน</label>
+                <input v-model="editForm.password" type="text" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">รูปภาพ</label>
+                <input
+                  type="file"
+                  @change="handleFileUpload"
+                  class="form-control"
+                  :required="!isEditMode"
+                />
 
-  <!-- แสดงรูปเดิมเฉพาะตอนแก้ไข -->
-  <div v-if="isEditMode && editForm.image">
-    <p class="mt-2">รูปเดิม:</p>
-    <img
-      :src="'http://localhost/project_67711727/api_php/uploads/' + editForm.image"
-      width="100"
-    />
-  </div>
-</div>
-
-
-
+                <div v-if="isEditMode && editForm.image">
+                  <p class="mt-2">รูปเดิม:</p>
+                  <img
+                    :src="'http://localhost/project_67711727/api_php/uploads/' + editForm.image"
+                    width="100"
+                  />
+                </div>
+              </div>
 
               <button type="submit" class="btn btn-success">
                 {{ isEditMode ? "บันทึกสำเร็จ" : "บันทึกพนักงานใหม่" }}
@@ -116,12 +115,13 @@ export default {
       firstname: "",
       lastname: "",
       username: "",
+      password: "",
       image: ""
     });
     const newImageFile = ref(null);
     let modalInstance = null;
 
-    // โหลดข้อมูลสินค้า
+    // โหลดข้อมูลพนักงาน
     const fetchEmployee = async () => {
       try {
         const res = await fetch("http://localhost/project_67711727/api_php/api_employee.php");
@@ -134,28 +134,29 @@ export default {
       }
     };
 
-// เปิด Modal สำหรับเพิ่มสินค้า
-const openAddModal = () => {
-  isEditMode.value = false;
-  editForm.value = {
-    employee_id: null,
-    firstname: "",
-    lastname: "",
-    username: "",
-    image: ""
-  };
-  newImageFile.value = null;
+    // เปิด Modal สำหรับเพิ่มพนักงาน
+    const openAddModal = () => {
+      isEditMode.value = false;
+      editForm.value = {
+        employee_id: null,
+        firstname: "",
+        lastname: "",
+        username: "",
+        password: "",
+        image: ""
+      };
+      newImageFile.value = null;
       
-  const modalEl = document.getElementById("editModal");
-  modalInstance = new window.bootstrap.Modal(modalEl);
-  modalInstance.show();
+      const modalEl = document.getElementById("editModal");
+      modalInstance = new window.bootstrap.Modal(modalEl);
+      modalInstance.show();
 
-  // ✅ รีเซ็ตค่า input file ให้ไม่แสดงชื่อไฟล์ค้าง
-  const fileInput = modalEl.querySelector('input[type="file"]');
-  if (fileInput) fileInput.value = "";
- };
+      // รีเซ็ตค่า input file
+      const fileInput = modalEl.querySelector('input[type="file"]');
+      if (fileInput) fileInput.value = "";
+    };
 
-// เปิด Modal สำหรับแก้ไขสินค้า
+    // เปิด Modal สำหรับแก้ไขพนักงาน
     const openEditModal = (employee) => {
       isEditMode.value = true;
       editForm.value = { ...employee };
@@ -165,18 +166,21 @@ const openAddModal = () => {
       modalInstance.show();
     };
 
+    // จัดการอัพโหลดไฟล์
     const handleFileUpload = (event) => {
       newImageFile.value = event.target.files[0];
     };
 
-// ✅ ใช้ฟังก์ชันเดียวในการเพิ่ม / แก้ไข
+    // ฟังก์ชันบันทึกพนักงาน
     const saveEmployee = async () => {
       const formData = new FormData();
       formData.append("action", isEditMode.value ? "update" : "add");
+
       if (isEditMode.value) formData.append("employee_id", editForm.value.employee_id);
       formData.append("firstname", editForm.value.firstname);
       formData.append("lastname", editForm.value.lastname);
       formData.append("username", editForm.value.username);
+      formData.append("password", editForm.value.password);  // ✅ ส่งรหัสผ่านไป
       if (newImageFile.value) formData.append("image", newImageFile.value);
 
       try {
@@ -197,9 +201,9 @@ const openAddModal = () => {
       }
     };
 
-    // ลบสินค้า
+    // ลบพนักงาน
     const deleteEmployee = async (id) => {
-      if (!confirm("คุณแน่ใจหรือไม่ที่จะลบสินค้านี้?")) return;
+      if (!confirm("คุณแน่ใจหรือไม่ที่จะลบพนักงานนี้?")) return;
 
       const formData = new FormData();
       formData.append("action", "delete");

@@ -9,7 +9,7 @@ try {
 
     if ($method === "GET") {
         // ✅ ดึงข้อมูลลูกค้าทั้งหมด
-        $stmt = $conn->prepare("SELECT customer_id, firstName, lastName,phone,username FROM customers ORDER BY customer_id ASC");
+        $stmt = $conn->prepare("SELECT customer_id, firstName, lastName,phone,username,password FROM customers ORDER BY customer_id ASC");
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

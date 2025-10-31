@@ -7,9 +7,12 @@ try {
 
     // ✅ ดึงข้อมูลลูกค้าทั้งหมด
     if ($method === "GET") {
-        $stmt = $conn->prepare("SELECT customer_id, firstName, lastName, phone, username FROM customers ORDER BY customer_id ASC");
+        $stmt = $conn->prepare("SELECT customer_id, firstName, lastName, phone, username, password FROM customers ORDER BY customer_id ASC");
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as &$row) {
+            unset($row['password']);
+        }
         echo json_encode(["success" => true, "data" => $result]);
     }
 
